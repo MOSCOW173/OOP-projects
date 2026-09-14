@@ -46,7 +46,7 @@ public:
         this->bookID=bookID;
     }
 
-    void settitle(string title)
+    void setTitle(string title)
     {
         this->title=title;
     }
@@ -63,7 +63,7 @@ public:
 
     void setPrice(double Price)
     {
-        this->price=price;
+        this->price=Price;
     }
 
     void setAvailable(bool a)

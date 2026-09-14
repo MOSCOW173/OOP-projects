@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <limits>
 
 #include "Book.h"
 #include "Member.h"
@@ -16,17 +17,30 @@ int main()
     cout << "     Library Management System" << endl;
     cout << "==================================" << endl;
 
+    // Get maximum number of books
     cout << "Enter maximum number of books: ";
     cin >> maxBooks;
 
+    while (cin.fail() || maxBooks <= 0)
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        cout << "Invalid number! Enter max books again: ";
+        cin >> maxBooks;
+    }
+
+    // Get maximum number of members
     cout << "Enter maximum number of members: ";
     cin >> maxMembers;
 
-    // Check numbers
-    if (maxBooks <= 0 || maxMembers <= 0)
+    while (cin.fail() || maxMembers <= 0)
     {
-        cout << "Invalid numbers!" << endl;
-        return 0;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        cout << "Invalid number! Enter max members again: ";
+        cin >> maxMembers;
     }
 
     Library library(maxBooks, maxMembers);
@@ -189,7 +203,8 @@ int main()
             cout << "Invalid choice! Please try again." << endl;
         }
 
-    } while (choice != 0);
+    }
+    while (choice != 0);
 
     return 0;
 }
