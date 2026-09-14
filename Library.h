@@ -41,6 +41,21 @@ public:
 
     void addBook(Book b)
     {
+        if (b.getBookID() <= 0)
+        {
+            cout << "Book ID must be greater than 0!" << endl;
+            return;
+        }
+
+        for (int i = 0; i < bookCount; i++)
+        {
+            if (books[i].getBookID() == b.getBookID())
+            {
+                cout << "Book ID already exists!" << endl;
+                return;
+            }
+        }
+
         if (bookCount < maxBooks)
         {
             books[bookCount] = b;
@@ -56,6 +71,21 @@ public:
 
     void addMember(Member m)
     {
+        if (m.getMemberID() <= 0)
+        {
+            cout << "Member ID must be greater than 0!" << endl;
+            return;
+        }
+
+        for (int i = 0; i < memberCount; i++)
+        {
+            if (members[i].getMemberID() == m.getMemberID())
+            {
+                cout << "Member ID already exists!" << endl;
+                return;
+            }
+        }
+
         if (memberCount < maxMembers)
         {
             members[memberCount] = m;
