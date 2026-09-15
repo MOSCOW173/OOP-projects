@@ -32,38 +32,45 @@ public:
 
     Book(int bookID, string title, string author, string category, double price)
     {
-        this->bookID=bookID;
-        this->title=title;
-        this->author=author;
-        this->category=category;
-        this->price=price;
+        this->bookID = bookID;
+        this->title = title;
+        this->author = author;
+        this->category = category;
+        this->price = price;
         available = true;
         borrowedBy = 0;
     }
 
     void setbookID(int bookID)
     {
-        this->bookID=bookID;
+        this->bookID = bookID;
     }
 
     void setTitle(string title)
     {
-        this->title=title;
+        this->title = title;
     }
 
     void setAuthor(string author)
     {
-        this->author=author;
+        this->author = author;
     }
 
     void setCategory(string category)
     {
-        this->category=category;
+        this->category = category;
     }
 
     void setPrice(double Price)
     {
-        this->price=Price;
+        if (Price > 0)
+        {
+            this->price = Price;
+        }
+        else
+        {
+            cout << "Price must be greater than 0!" << endl;
+        }
     }
 
     void setAvailable(bool a)
