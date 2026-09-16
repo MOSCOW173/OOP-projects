@@ -68,6 +68,15 @@ int main()
         cout << "Enter your choice: ";
         cin >> choice;
 
+        while (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            cout << "Invalid input! Please enter a number: ";
+            cin >> choice;
+        }
+
         if (choice == 1)
         {
             int id;
