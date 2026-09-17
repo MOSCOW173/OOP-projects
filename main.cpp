@@ -88,6 +88,15 @@ int main()
             cout << "Enter Book ID: ";
             cin >> id;
 
+            while (cin.fail() || id <= 0)
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+                cout << "Invalid Book ID! Please enter a positive number: ";
+                cin >> id;
+            }
+
             cin.ignore();
 
             cout << "Enter Book Title: ";
