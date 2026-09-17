@@ -110,7 +110,14 @@ int main()
 
             cout << "Enter Price: ";
             cin >> price;
+while (cin.fail() || price <= 0)
+{
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
+    cout << "Invalid price! Please enter a positive number: ";
+    cin >> price;
+}
             Book book(id, title, author, category, price);
 
             library.addBook(book);
