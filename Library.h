@@ -47,6 +47,12 @@ public:
             return;
         }
 
+        if (b.getPrice() <= 0)
+        {
+            cout << "Book price must be greater than 0!" << endl;
+            return;
+        }
+
         for (int i = 0; i < bookCount; i++)
         {
             if (books[i].getBookID() == b.getBookID())

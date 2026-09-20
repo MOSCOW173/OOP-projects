@@ -68,15 +68,6 @@ int main()
         cout << "Enter your choice: ";
         cin >> choice;
 
-        while (cin.fail())
-        {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-            cout << "Invalid input! Please enter a number: ";
-            cin >> choice;
-        }
-
         if (choice == 1)
         {
             int id;
@@ -87,15 +78,6 @@ int main()
 
             cout << "Enter Book ID: ";
             cin >> id;
-
-            while (cin.fail() || id <= 0)
-            {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-                cout << "Invalid Book ID! Please enter a positive number: ";
-                cin >> id;
-            }
 
             cin.ignore();
 
@@ -110,14 +92,7 @@ int main()
 
             cout << "Enter Price: ";
             cin >> price;
-while (cin.fail() || price <= 0)
-{
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    cout << "Invalid price! Please enter a positive number: ";
-    cin >> price;
-}
             Book book(id, title, author, category, price);
 
             library.addBook(book);
