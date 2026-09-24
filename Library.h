@@ -53,6 +53,23 @@ private:
         cout << "------------------------" << endl;
     }
 
+    void displayTransaction(const Transaction& transaction) const
+    {
+        cout << "Transaction ID: "
+             << transaction.getTransactionID() << endl;
+
+        cout << "Type: "
+             << transaction.getType() << endl;
+
+        cout << "Description: "
+             << transaction.getDescription() << endl;
+
+        cout << "Amount: "
+             << transaction.getAmount() << endl;
+
+        cout << "-----------------------------" << endl;
+    }
+
 public:
 
     Library(int booksNumber, int membersNumber, int transactionsNumber)
@@ -302,19 +319,7 @@ public:
 
         for (int i = 0; i < (int)transactions.size(); i++)
         {
-            cout << "Transaction ID: "
-                 << transactions[i].getTransactionID() << endl;
-
-            cout << "Type: "
-                 << transactions[i].getType() << endl;
-
-            cout << "Description: "
-                 << transactions[i].getDescription() << endl;
-
-            cout << "Amount: "
-                 << transactions[i].getAmount() << endl;
-
-            cout << "-----------------------------" << endl;
+            displayTransaction(transactions[i]);
         }
     }
 
@@ -329,20 +334,7 @@ public:
         {
             if (transactions[i].getType() == "Income")
             {
-                cout << "Transaction ID: "
-                     << transactions[i].getTransactionID() << endl;
-
-                cout << "Type: "
-                     << transactions[i].getType() << endl;
-
-                cout << "Description: "
-                     << transactions[i].getDescription() << endl;
-
-                cout << "Amount: "
-                     << transactions[i].getAmount() << endl;
-
-                cout << "-----------------------------" << endl;
-
+                displayTransaction(transactions[i]);
                 found = true;
             }
         }
@@ -364,20 +356,7 @@ public:
         {
             if (transactions[i].getType() == "Expense")
             {
-                cout << "Transaction ID: "
-                     << transactions[i].getTransactionID() << endl;
-
-                cout << "Type: "
-                     << transactions[i].getType() << endl;
-
-                cout << "Description: "
-                     << transactions[i].getDescription() << endl;
-
-                cout << "Amount: "
-                     << transactions[i].getAmount() << endl;
-
-                cout << "-----------------------------" << endl;
-
+                displayTransaction(transactions[i]);
                 found = true;
             }
         }
