@@ -1,7 +1,6 @@
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
-#include <iostream>
 #include <string>
 
 using namespace std;
@@ -21,7 +20,9 @@ public:
     {
     }
 
-    Transaction(int id, string transactionType, string transactionDescription, double transactionAmount)
+    Transaction(int id, const string& transactionType,
+                const string& transactionDescription,
+                double transactionAmount)
         : transactionID(id),
           type(transactionType),
           description(transactionDescription),
@@ -54,12 +55,12 @@ public:
         transactionID = id;
     }
 
-    void setType(string transactionType)
+    void setType(const string& transactionType)
     {
         type = transactionType;
     }
 
-    void setDescription(string transactionDescription)
+    void setDescription(const string& transactionDescription)
     {
         description = transactionDescription;
     }
