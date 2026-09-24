@@ -1,7 +1,6 @@
 #ifndef MEMBER_H
 #define MEMBER_H
 
-#include <iostream>
 #include <string>
 
 using namespace std;
@@ -21,7 +20,9 @@ public:
     {
     }
 
-    Member(int memberID, string name, string phone, string email)
+    Member(int memberID, const string& name,
+           const string& phone,
+           const string& email)
         : memberID(memberID),
           name(name),
           phone(phone),
@@ -34,17 +35,17 @@ public:
         memberID = id;
     }
 
-    void setName(string name)
+    void setName(const string& name)
     {
         this->name = name;
     }
 
-    void setPhone(string phone)
+    void setPhone(const string& phone)
     {
         this->phone = phone;
     }
 
-    void setEmail(string email)
+    void setEmail(const string& email)
     {
         this->email = email;
     }

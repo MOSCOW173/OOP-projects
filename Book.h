@@ -1,7 +1,6 @@
 #ifndef BOOK_H
 #define BOOK_H
 
-#include <iostream>
 #include <string>
 
 using namespace std;
@@ -25,7 +24,10 @@ public:
     {
     }
 
-    Book(int bookID, string title, string author, string category, double price)
+    Book(int bookID, const string& title,
+         const string& author,
+         const string& category,
+         double price)
         : bookID(bookID),
           title(title),
           author(author),
@@ -41,17 +43,17 @@ public:
         this->bookID = bookID;
     }
 
-    void setTitle(string title)
+    void setTitle(const string& title)
     {
         this->title = title;
     }
 
-    void setAuthor(string author)
+    void setAuthor(const string& author)
     {
         this->author = author;
     }
 
-    void setCategory(string category)
+    void setCategory(const string& category)
     {
         this->category = category;
     }
@@ -61,10 +63,6 @@ public:
         if (price > 0)
         {
             this->price = price;
-        }
-        else
-        {
-            cout << "Price must be greater than 0!" << endl;
         }
     }
 
