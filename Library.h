@@ -6,7 +6,7 @@
 
 #include "Book.h"
 #include "Member.h"
-#include "FinanceManger.h"
+#include "FinanceManager.h"
 
 using namespace std;
 
