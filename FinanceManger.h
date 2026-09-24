@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "Transaction.h"
 
@@ -11,116 +12,132 @@ using namespace std;
 class FinanceManager
 {
 private:
-    Transaction* transactions;
-    int transactionCount;
+    vector<Transaction> transactions;
     int maxTransactions;
     double balance;
 
+    void displayTransaction(const Transaction& transaction) const
+    {
+        cout << "Transaction ID: "
+             << transaction.getTransactionID() << endl;
+
+        cout << "Type: "
+             << transaction.getType() << endl;
+
+        cout << "Description: "
+             << transaction.getDescription() << endl;
+
+        cout << "Amount: "
+             << transaction.getAmount() << endl;
+
+        cout << "-----------------------------" << endl;
+    }
+
 public:
+
     FinanceManager(int maxNumberOfTransactions)
+        : maxTransactions(maxNumberOfTransactions), balance(0)
     {
-        maxTransactions = maxNumberOfTransactions;
-        transactionCount = 0;
-        balance = 0;
-
-        transactions = new Transaction[maxTransactions];
+        if (maxTransactions <= 0)
+        {
+            maxTransactions = 1;
+        }
     }
 
-    ~FinanceManager()
-    {
-        delete[] transactions;
-    }
-
-    void recordIncome(string description, double amount)
+    bool recordIncome(const string& description, double amount)
     {
         if (amount <= 0)
         {
-            cout << "Invalid income amount!" << endl;
-            return;
+            return false;
         }
 
         if (description.empty())
         {
-            cout << "Description cannot be empty!" << endl;
-            return;
+            return false;
         }
 
-        if (transactionCount >= maxTransactions)
+        if ((int)transactions.size() >= maxTransactions)
         {
-            cout << "Error: Maximum capacity reached! Cannot add more transactions." << endl;
-            return;
+            return false;
         }
 
-        int transactionID = transactionCount + 1;
+        int transactionID = (int)transactions.size() + 1;
 
-        transactions[transactionCount] =
-            Transaction(transactionID, "Income", description, amount);
+        Transaction transaction(
+            transactionID,
+            "Income",
+            description,
+            amount
+        );
 
-        transactionCount++;
+        transactions.push_back(transaction);
+
         balance += amount;
 
-        cout << "Income recorded successfully." << endl;
+        return true;
     }
 
-    void recordExpense(string description, double amount)
+    bool recordExpense(const string& description, double amount)
     {
         if (amount <= 0)
         {
-            cout << "Invalid expense amount!" << endl;
-            return;
+            return false;
         }
 
         if (description.empty())
         {
-            cout << "Description cannot be empty!" << endl;
-            return;
+            return false;
         }
 
-        if (transactionCount >= maxTransactions)
+        if ((int)transactions.size() >= maxTransactions)
         {
-            cout << "Error: Maximum capacity reached! Cannot add more transactions." << endl;
-            return;
+            return false;
         }
 
-        int transactionID = transactionCount + 1;
+        int transactionID = (int)transactions.size() + 1;
 
-        transactions[transactionCount] =
-            Transaction(transactionID, "Expense", description, amount);
+        Transaction transaction(
+            transactionID,
+            "Expense",
+            description,
+            amount
+        );
 
-        transactionCount++;
+        transactions.push_back(transaction);
+
         balance -= amount;
 
-        cout << "Expense recorded successfully." << endl;
+        return true;
     }
 
-    double getBalance()
+    double getBalance() const
     {
         return balance;
     }
 
-    void displayAllTransactions()
+    void displayAllTransactions() const
     {
-        if (transactionCount == 0)
+        if (transactions.empty())
         {
             cout << "No transactions found." << endl;
             return;
         }
 
-        for (int i = 0; i < transactionCount; i++)
+        for (int i = 0; i < (int)transactions.size(); i++)
         {
-            transactions[i].displayTransaction();
+            displayTransaction(transactions[i]);
         }
     }
 
-    void displayIncomeOnly()
+    void displayIncomeOnly() const
     {
         bool found = false;
 
-        for (int i = 0; i < transactionCount; i++)
+        for (int i = 0; i < (int)transactions.size(); i++)
         {
             if (transactions[i].getType() == "Income")
             {
-                transactions[i].displayTransaction();
+                displayTransaction(transactions[i]);
                 found = true;
             }
         }
@@ -131,15 +148,15 @@ public:
         }
     }
 
-    void displayExpensesOnly()
+    void displayExpensesOnly() const
     {
         bool found = false;
 
-        for (int i = 0; i < transactionCount; i++)
+        for (int i = 0; i < (int)transactions.size(); i++)
         {
             if (transactions[i].getType() == "Expense")
             {
-                transactions[i].displayTransaction();
+                displayTransaction(transactions[i]);
                 found = true;
             }
         }
@@ -150,12 +167,12 @@ public:
         }
     }
 
-    void generateFinancialReport()
+    void generateFinancialReport() const
     {
         double totalIncome = 0;
         double totalExpenses = 0;
 
-        for (int i = 0; i < transactionCount; i++)
+        for (int i = 0; i < (int)transactions.size(); i++)
         {
             if (transactions[i].getType() == "Income")
             {

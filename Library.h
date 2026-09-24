@@ -2,44 +2,76 @@
 #define LIBRARY_H
 
 #include <iostream>
+#include <vector>
+
 #include "Book.h"
 #include "Member.h"
+#include "FinanceManger.h"
 
 using namespace std;
 
 class Library
 {
 private:
-    Book* books;
-    Member* members;
-
-    int bookCount;
-    int memberCount;
+    vector<Book> books;
+    vector<Member> members;
+    FinanceManager financeManager;
 
     int maxBooks;
     int maxMembers;
 
+    const double membershipFee = 100;
+
+    void displayBook(const Book& book) const
+    {
+        cout << "Book ID: " << book.getBookID() << endl;
+        cout << "Title: " << book.getTitle() << endl;
+        cout << "Author: " << book.getAuthor() << endl;
+        cout << "Category: " << book.getCategory() << endl;
+        cout << "Price: " << book.getPrice() << endl;
+
+        if (book.getAvailable())
+        {
+            cout << "Available: Yes" << endl;
+        }
+        else
+        {
+            cout << "Available: No" << endl;
+            cout << "Borrowed By Member ID: "
+                 << book.getBorrowedBy() << endl;
+        }
+
+        cout << "------------------------" << endl;
+    }
+
+    void displayMember(const Member& member) const
+    {
+        cout << "Member ID: " << member.getMemberID() << endl;
+        cout << "Name: " << member.getName() << endl;
+        cout << "Phone: " << member.getPhone() << endl;
+        cout << "Email: " << member.getEmail() << endl;
+        cout << "------------------------" << endl;
+    }
+
 public:
 
-    Library(int booksNumber, int membersNumber)
+    Library(int booksNumber, int membersNumber, int transactionsNumber)
+        : financeManager(transactionsNumber),
+          maxBooks(booksNumber),
+          maxMembers(membersNumber)
     {
-        maxBooks = booksNumber;
-        maxMembers = membersNumber;
+        if (maxBooks <= 0)
+        {
+            maxBooks = 1;
+        }
 
-        bookCount = 0;
-        memberCount = 0;
-
-        books = new Book[maxBooks];
-        members = new Member[maxMembers];
+        if (maxMembers <= 0)
+        {
+            maxMembers = 1;
+        }
     }
 
-    ~Library()
-    {
-        delete[] books;
-        delete[] members;
-    }
-
-    void addBook(Book b)
+    void addBook(const Book& b)
     {
         if (b.getBookID() <= 0)
         {
@@ -53,7 +85,7 @@ public:
             return;
         }
 
-        for (int i = 0; i < bookCount; i++)
+        for (int i = 0; i < (int)books.size(); i++)
         {
             if (books[i].getBookID() == b.getBookID())
             {
@@ -62,20 +94,25 @@ public:
             }
         }
 
-        if (bookCount < maxBooks)
+        if ((int)books.size() >= maxBooks)
         {
-            books[bookCount] = b;
-            bookCount++;
+            cout << "Library is full!" << endl;
+            return;
+        }
+
+        if (financeManager.recordExpense("Book Purchase", b.getPrice()))
+        {
+            books.push_back(b);
 
             cout << "Book added successfully!" << endl;
         }
         else
         {
-            cout << "Library is full!" << endl;
+            cout << "Book was not added because the finance transaction could not be recorded!" << endl;
         }
     }
 
-    void addMember(Member m)
+    void addMember(const Member& m)
     {
         if (m.getMemberID() <= 0)
         {
@@ -83,7 +120,7 @@ public:
             return;
         }
 
-        for (int i = 0; i < memberCount; i++)
+        for (int i = 0; i < (int)members.size(); i++)
         {
             if (members[i].getMemberID() == m.getMemberID())
             {
@@ -92,54 +129,59 @@ public:
             }
         }
 
-        if (memberCount < maxMembers)
+        if ((int)members.size() >= maxMembers)
         {
-            members[memberCount] = m;
-            memberCount++;
+            cout << "Members list is full!" << endl;
+            return;
+        }
+
+        if (financeManager.recordIncome("Membership Fee", membershipFee))
+        {
+            members.push_back(m);
 
             cout << "Member added successfully!" << endl;
         }
         else
         {
-            cout << "Members list is full!" << endl;
+            cout << "Member was not added because the finance transaction could not be recorded!" << endl;
         }
     }
 
-    void displayAllBooks()
+    void displayAllBooks() const
     {
-        if (bookCount == 0)
+        if (books.empty())
         {
             cout << "No books available." << endl;
             return;
         }
 
-        for (int i = 0; i < bookCount; i++)
+        for (int i = 0; i < (int)books.size(); i++)
         {
-            books[i].displayBook();
+            displayBook(books[i]);
         }
     }
 
-    void displayAllMembers()
+    void displayAllMembers() const
     {
-        if (memberCount == 0)
+        if (members.empty())
         {
             cout << "No members available." << endl;
             return;
         }
 
-        for (int i = 0; i < memberCount; i++)
+        for (int i = 0; i < (int)members.size(); i++)
         {
-            members[i].displayMember();
+            displayMember(members[i]);
         }
     }
 
-    void searchBook(int id)
+    void searchBook(int id) const
     {
-        for (int i = 0; i < bookCount; i++)
+        for (int i = 0; i < (int)books.size(); i++)
         {
             if (books[i].getBookID() == id)
             {
-                books[i].displayBook();
+                displayBook(books[i]);
                 return;
             }
         }
@@ -147,13 +189,13 @@ public:
         cout << "Book not found!" << endl;
     }
 
-    void searchMember(int id)
+    void searchMember(int id) const
     {
-        for (int i = 0; i < memberCount; i++)
+        for (int i = 0; i < (int)members.size(); i++)
         {
             if (members[i].getMemberID() == id)
             {
-                members[i].displayMember();
+                displayMember(members[i]);
                 return;
             }
         }
@@ -165,7 +207,7 @@ public:
     {
         bool memberFound = false;
 
-        for (int i = 0; i < memberCount; i++)
+        for (int i = 0; i < (int)members.size(); i++)
         {
             if (members[i].getMemberID() == memberID)
             {
@@ -180,7 +222,7 @@ public:
             return;
         }
 
-        for (int i = 0; i < bookCount; i++)
+        for (int i = 0; i < (int)books.size(); i++)
         {
             if (books[i].getBookID() == bookID)
             {
@@ -205,7 +247,7 @@ public:
 
     void returnBook(int bookID)
     {
-        for (int i = 0; i < bookCount; i++)
+        for (int i = 0; i < (int)books.size(); i++)
         {
             if (books[i].getBookID() == bookID)
             {
@@ -228,15 +270,15 @@ public:
         cout << "Book not found!" << endl;
     }
 
-    void displayBorrowedBooks()
+    void displayBorrowedBooks() const
     {
         bool found = false;
 
-        for (int i = 0; i < bookCount; i++)
+        for (int i = 0; i < (int)books.size(); i++)
         {
             if (!books[i].getAvailable())
             {
-                books[i].displayBook();
+                displayBook(books[i]);
                 found = true;
             }
         }
@@ -245,6 +287,32 @@ public:
         {
             cout << "No books are currently borrowed." << endl;
         }
+    }
+
+    void displayAllTransactions() const
+    {
+        financeManager.displayAllTransactions();
+    }
+
+    void displayIncomeOnly() const
+    {
+        financeManager.displayIncomeOnly();
+    }
+
+    void displayExpensesOnly() const
+    {
+        financeManager.displayExpensesOnly();
+    }
+
+    void showCurrentBalance() const
+    {
+        cout << "Current Balance: "
+             << financeManager.getBalance() << endl;
+    }
+
+    void generateFinancialReport() const
+    {
+        financeManager.generateFinancialReport();
     }
 };
 

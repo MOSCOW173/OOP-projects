@@ -1,5 +1,6 @@
-#ifndef Member_H
-#define Member_H
+#ifndef MEMBER_H
+#define MEMBER_H
+
 #include <iostream>
 #include <string>
 
@@ -16,19 +17,16 @@ private:
 public:
 
     Member()
+        : memberID(0), name(""), phone(""), email("")
     {
-        memberID = 0;
-        name = "";
-        phone = "";
-        email = "";
     }
 
     Member(int memberID, string name, string phone, string email)
+        : memberID(memberID),
+          name(name),
+          phone(phone),
+          email(email)
     {
-        this->memberID=memberID;
-         this->name = name;
-         this->phone = phone;
-        this-> email = email;
     }
 
     void setMemberID(int id)
@@ -36,48 +34,39 @@ public:
         memberID = id;
     }
 
-    void setName(string n)
+    void setName(string name)
     {
-        name = n;
+        this->name = name;
     }
 
-    void setPhone(string p)
+    void setPhone(string phone)
     {
-        phone = p;
+        this->phone = phone;
     }
 
-    void setEmail(string e)
+    void setEmail(string email)
     {
-        email = e;
+        this->email = email;
     }
 
-    int getMemberID()
+    int getMemberID() const
     {
         return memberID;
     }
 
-    string getName()
+    string getName() const
     {
         return name;
     }
 
-    string getPhone()
+    string getPhone() const
     {
         return phone;
     }
 
-    string getEmail()
+    string getEmail() const
     {
         return email;
-    }
-
-    void displayMember()
-    {
-        cout << "Member ID: " << memberID << endl;
-        cout << "Name: " << name << endl;
-        cout << "Phone: " << phone << endl;
-        cout << "Email: " << email << endl;
-        cout << "------------------------" << endl;
     }
 };
 

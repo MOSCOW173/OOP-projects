@@ -20,25 +20,20 @@ private:
 public:
 
     Book()
+        : bookID(0), title(""), author(""), category(""),
+          price(0), available(true), borrowedBy(0)
     {
-        bookID = 0;
-        title = "";
-        author = "";
-        category = "";
-        price = 0;
-        available = true;
-        borrowedBy = 0;
     }
 
     Book(int bookID, string title, string author, string category, double price)
+        : bookID(bookID),
+          title(title),
+          author(author),
+          category(category),
+          price(price),
+          available(true),
+          borrowedBy(0)
     {
-        this->bookID = bookID;
-        this->title = title;
-        this->author = author;
-        this->category = category;
-        this->price = price;
-        available = true;
-        borrowedBy = 0;
     }
 
     void setbookID(int bookID)
@@ -61,11 +56,11 @@ public:
         this->category = category;
     }
 
-    void setPrice(double Price)
+    void setPrice(double price)
     {
-        if (Price > 0)
+        if (price > 0)
         {
-            this->price = Price;
+            this->price = price;
         }
         else
         {
@@ -73,9 +68,9 @@ public:
         }
     }
 
-    void setAvailable(bool a)
+    void setAvailable(bool available)
     {
-        available = a;
+        this->available = available;
     }
 
     void setBorrowedBy(int id)
@@ -83,60 +78,39 @@ public:
         borrowedBy = id;
     }
 
-    int getBookID()
+    int getBookID() const
     {
         return bookID;
     }
 
-    string getTitle()
+    string getTitle() const
     {
         return title;
     }
 
-    string getAuthor()
+    string getAuthor() const
     {
         return author;
     }
 
-    string getCategory()
+    string getCategory() const
     {
         return category;
     }
 
-    double getPrice()
+    double getPrice() const
     {
         return price;
     }
 
-    bool getAvailable()
+    bool getAvailable() const
     {
         return available;
     }
 
-    int getBorrowedBy()
+    int getBorrowedBy() const
     {
         return borrowedBy;
-    }
-
-    void displayBook()
-    {
-        cout << "Book ID: " << bookID << endl;
-        cout << "Title: " << title << endl;
-        cout << "Author: " << author << endl;
-        cout << "Category: " << category << endl;
-        cout << "Price: " << price << endl;
-
-        if (available)
-        {
-            cout << "Available: Yes" << endl;
-        }
-        else
-        {
-            cout << "Available: No" << endl;
-            cout << "Borrowed By Member ID: " << borrowedBy << endl;
-        }
-
-        cout << "------------------------" << endl;
     }
 };
 

@@ -15,38 +15,36 @@ private:
     double amount;
 
 public:
+
     Transaction()
+        : transactionID(0), type(""), description(""), amount(0)
     {
-        transactionID = 0;
-        type = "";
-        description = "";
-        amount = 0;
     }
 
     Transaction(int id, string transactionType, string transactionDescription, double transactionAmount)
+        : transactionID(id),
+          type(transactionType),
+          description(transactionDescription),
+          amount(transactionAmount)
     {
-        transactionID = id;
-        type = transactionType;
-        description = transactionDescription;
-        amount = transactionAmount;
     }
 
-    int getTransactionID()
+    int getTransactionID() const
     {
         return transactionID;
     }
 
-    string getType()
+    string getType() const
     {
         return type;
     }
 
-    string getDescription()
+    string getDescription() const
     {
         return description;
     }
 
-    double getAmount()
+    double getAmount() const
     {
         return amount;
     }
@@ -69,15 +67,6 @@ public:
     void setAmount(double transactionAmount)
     {
         amount = transactionAmount;
-    }
-
-    void displayTransaction()
-    {
-        cout << "Transaction ID: " << transactionID << endl;
-        cout << "Type: " << type << endl;
-        cout << "Description: " << description << endl;
-        cout << "Amount: " << amount << endl;
-        cout << "-----------------------------" << endl;
     }
 };
 
