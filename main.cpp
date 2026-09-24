@@ -8,7 +8,7 @@
 
 using namespace std;
 
-// Read any integer
+// Read integer
 int readInt()
 {
     int value;
@@ -35,20 +35,24 @@ int readInt()
 // Read positive integer
 int readPositiveInt()
 {
-    int value = readInt();
+    int value;
 
-    while (value <= 0)
+    while (true)
     {
+        value = readInt();
+
         if (cin.eof())
         {
             return 0;
         }
 
-        cout << "Please enter a positive number: ";
-        value = readInt();
-    }
+        if (value > 0)
+        {
+            return value;
+        }
 
-    return value;
+        cout << "Please enter a positive number: ";
+    }
 }
 
 // Read positive double
@@ -135,7 +139,7 @@ string readPhone()
     }
 }
 
-// Read valid email
+// Read email
 string readEmail()
 {
     string email;
@@ -147,9 +151,11 @@ string readEmail()
             return "";
         }
 
+        size_t atPosition = email.find('@');
+
         if (!email.empty() &&
-            email.find('@') != string::npos &&
-            email.find('.', email.find('@') + 1) != string::npos)
+            atPosition != string::npos &&
+            email.find('.', atPosition + 1) != string::npos)
         {
             return email;
         }
@@ -171,7 +177,7 @@ int main()
     cout << "Enter maximum number of books: ";
     maxBooks = readPositiveInt();
 
-    if (maxBooks == 0 && cin.eof())
+    if (cin.eof())
     {
         return 0;
     }
@@ -179,7 +185,7 @@ int main()
     cout << "Enter maximum number of members: ";
     maxMembers = readPositiveInt();
 
-    if (maxMembers == 0 && cin.eof())
+    if (cin.eof())
     {
         return 0;
     }
@@ -187,7 +193,7 @@ int main()
     cout << "Enter maximum number of transactions: ";
     maxTransactions = readPositiveInt();
 
-    if (maxTransactions == 0 && cin.eof())
+    if (cin.eof())
     {
         return 0;
     }
@@ -352,10 +358,8 @@ int main()
 
         else if (choice == 5)
         {
-            int id;
-
             cout << "Enter Book ID: ";
-            id = readPositiveInt();
+            int id = readPositiveInt();
 
             if (cin.eof())
             {
@@ -367,10 +371,8 @@ int main()
 
         else if (choice == 6)
         {
-            int id;
-
             cout << "Enter Member ID: ";
-            id = readPositiveInt();
+            int id = readPositiveInt();
 
             if (cin.eof())
             {
@@ -382,11 +384,8 @@ int main()
 
         else if (choice == 7)
         {
-            int bookID;
-            int memberID;
-
             cout << "Enter Book ID: ";
-            bookID = readPositiveInt();
+            int bookID = readPositiveInt();
 
             if (cin.eof())
             {
@@ -394,7 +393,7 @@ int main()
             }
 
             cout << "Enter Member ID: ";
-            memberID = readPositiveInt();
+            int memberID = readPositiveInt();
 
             if (cin.eof())
             {
@@ -406,10 +405,8 @@ int main()
 
         else if (choice == 8)
         {
-            int bookID;
-
             cout << "Enter Book ID: ";
-            bookID = readPositiveInt();
+            int bookID = readPositiveInt();
 
             if (cin.eof())
             {
