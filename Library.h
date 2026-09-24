@@ -20,7 +20,7 @@ private:
     int maxBooks;
     int maxMembers;
 
-    const double membershipFee = 100;
+    double membershipFee = 100;
 
     void displayBook(const Book& book) const
     {
