@@ -291,17 +291,101 @@ public:
 
     void displayAllTransactions() const
     {
-        financeManager.displayAllTransactions();
+        const vector<Transaction>& transactions =
+            financeManager.getTransactions();
+
+        if (transactions.empty())
+        {
+            cout << "No transactions found." << endl;
+            return;
+        }
+
+        for (int i = 0; i < (int)transactions.size(); i++)
+        {
+            cout << "Transaction ID: "
+                 << transactions[i].getTransactionID() << endl;
+
+            cout << "Type: "
+                 << transactions[i].getType() << endl;
+
+            cout << "Description: "
+                 << transactions[i].getDescription() << endl;
+
+            cout << "Amount: "
+                 << transactions[i].getAmount() << endl;
+
+            cout << "-----------------------------" << endl;
+        }
     }
 
     void displayIncomeOnly() const
     {
-        financeManager.displayIncomeOnly();
+        const vector<Transaction>& transactions =
+            financeManager.getTransactions();
+
+        bool found = false;
+
+        for (int i = 0; i < (int)transactions.size(); i++)
+        {
+            if (transactions[i].getType() == "Income")
+            {
+                cout << "Transaction ID: "
+                     << transactions[i].getTransactionID() << endl;
+
+                cout << "Type: "
+                     << transactions[i].getType() << endl;
+
+                cout << "Description: "
+                     << transactions[i].getDescription() << endl;
+
+                cout << "Amount: "
+                     << transactions[i].getAmount() << endl;
+
+                cout << "-----------------------------" << endl;
+
+                found = true;
+            }
+        }
+
+        if (!found)
+        {
+            cout << "No income transactions found." << endl;
+        }
     }
 
     void displayExpensesOnly() const
     {
-        financeManager.displayExpensesOnly();
+        const vector<Transaction>& transactions =
+            financeManager.getTransactions();
+
+        bool found = false;
+
+        for (int i = 0; i < (int)transactions.size(); i++)
+        {
+            if (transactions[i].getType() == "Expense")
+            {
+                cout << "Transaction ID: "
+                     << transactions[i].getTransactionID() << endl;
+
+                cout << "Type: "
+                     << transactions[i].getType() << endl;
+
+                cout << "Description: "
+                     << transactions[i].getDescription() << endl;
+
+                cout << "Amount: "
+                     << transactions[i].getAmount() << endl;
+
+                cout << "-----------------------------" << endl;
+
+                found = true;
+            }
+        }
+
+        if (!found)
+        {
+            cout << "No expense transactions found." << endl;
+        }
     }
 
     void showCurrentBalance() const
@@ -312,7 +396,18 @@ public:
 
     void generateFinancialReport() const
     {
-        financeManager.generateFinancialReport();
+        double totalIncome = financeManager.getTotalIncome();
+        double totalExpenses = financeManager.getTotalExpenses();
+        double balance = financeManager.getBalance();
+
+        cout << endl;
+        cout << "==================================" << endl;
+        cout << "       Financial Report" << endl;
+        cout << "==================================" << endl;
+        cout << "Total Income: " << totalIncome << endl;
+        cout << "Total Expenses: " << totalExpenses << endl;
+        cout << "Current Balance: " << balance << endl;
+        cout << "==================================" << endl;
     }
 };
 
